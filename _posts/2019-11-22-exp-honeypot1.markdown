@@ -71,7 +71,7 @@ On the Windows Server I did the following:
 ### Security Onion Setup
 As you can see in the diagram above I've attached two bridged interfaces:
 1. Interface 1: sensor, basically this is what will be collecting data and according to security onion's docs, since it is bridged it will monitor everything coming and going from the host machine. This will result in monitoring all traffic that will flow into the network. 
-2. Interface 2 (192.168.1.5): management interface. Used to connecting to security onion and do analysis on the data captured (alerts, pcaps, logs, the good stuff, etc etc)
+2. Interface 2 (192.168.1.5): management interface. Used to connect to security onion to administer it and do analysis on the data captured/processed from the sensor (alerts, pcaps, logs, the good stuff, etc etc)
 
 ### Caveats
 1. There is no HIDS on the Windows machine, I am planning on using [Wazuh](https://securityonion.readthedocs.io/en/latest/wazuh.html)
