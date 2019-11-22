@@ -5,7 +5,7 @@ date:   2019-11-22 7:00:00 +0300
 categories: exp honeypot
 ---
 
-The goal is to setup a Windows SMB and RDP honeypot. However, I did not want to expose the machine to the external/monitoring network which has security onion and internet access. 
+The goal is to setup a Windows SMB and RDP honeypot. However, I did not want to expose the honeypot (Win Srv 2016) to the external/monitoring network which has security onion and internet access. 
 
 I managed to get the following setup running on a small tower server:
 ![honeypot setup](/assets/honeynetdiagram1.png)
@@ -53,7 +53,7 @@ COMMIT
 > ufw allow ssh
 ```
 
-### Windows Server Setup
+### Windows Server 2016 Setup
 On the Windows Server I did the following:
 1. Updated it
 2. Modified local group policy such that:
