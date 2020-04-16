@@ -37,27 +37,27 @@ This one is self explanatory. The vulnerable machines are on this network. Furth
 ### Windows Activity Monitoring
 I went with [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon) to log Windows activities. I used SwiftOnSecurity's configuration which can be found on [Github](https://github.com/SwiftOnSecurity/sysmon-config). Many thanks to SwiftOnSecurity.
 
-Then I used [WinLogBeat](https://www.elastic.co/downloads/beats/winlogbeat). I had to make sure that the version of WinLogBeat matches the version of Kibana on running on SecurityOnion. With WinLogBeat you choose what you want to be shipped and where. Sysmon logs are stored in Windows Event Logs under: `Applications and Services > Microsoft > Windows > Sysmon > Operational`. The following is from the WinLogBeat configuration file (winlogbeat.yml):
+Then I used [WinLogBeat](https://www.elastic.co/downloads/beats/winlogbeat). I had to make sure that the version of WinLogBeat matches the version of Kibana running on SecurityOnion. With WinLogBeat you choose what you want to be shipped and where. Sysmon logs are stored in Windows Event Logs under: `Applications and Services > Microsoft > Windows > Sysmon > Operational`. The following is from the WinLogBeat configuration file (winlogbeat.yml):
 
-![winlogbeat.yml](/assets/winlogbeat1.png)
-![winlogbeat.yml](/assets/winlogbeat2.png)
+![winlogbeat.yml](/assets/winlogbeat1.PNG)
+![winlogbeat.yml](/assets/winlogbeat2.PNG)
 
 I did activate powershell logging and you can see from the configuration file that I am shipping them. But I did not test for it yet properly.
 
 Once Sysmon and WinLogBeat are setup. Then you must configure SecurityOnion to accept Beats traffic. This can be achieved by running `sudo so-allow` then selecting option `b`.
 
-![so_allow](/assets/onion_so_allow1.png)
+![so_allow](/assets/onion_so_allow1.PNG)
 
 One last step, new releases of SecurityOnion default to the Minimal installation of Logstash. Meaning you have to add extra configurations which suite your needs manually.
 
 List of configurations I added:
-![logstash](/assets/logstash_conf1.png)
+![logstash](/assets/logstash_conf1.PNG)
 
 How to added them is as follows:
 
 `cd` into `/etc/logstash` first then create symbolic links from the available configurations in the `/etc/logstash/conf.d.available` directory to the `/etc/logstash/conf.d.minimal` directory:
 
-![logstash](/assets/logstash_conf2.png)
+![logstash](/assets/logstash_conf2.PNG)
 
 After that, restart the logstash service (which is running on a docker container):
 `sudo docker stop so-logstash && sudo so-logstash-start`
@@ -65,7 +65,7 @@ After that, restart the logstash service (which is running on a docker container
 ### Intercepting HTTPS Traffic
 With most sites using HTTPS and Firefox pushing for DNS over HTTPS. Decrypting TLS traffic is a must, if you want to get visibility on web activity. For this I went with [PolarProxy](https://www.netresec.com/?page=PolarProxy) and I followed this [tutorial](https://www.netresec.com/?page=Blog&month=2020-01&post=Sniffing-Decrypted-TLS-Traffic-with-Security-Onion) to set it up on SecurityOnion. After setting it up on SecurityOnion and configuring the Windows machines in the honeypot network to trust the CA certificate of PolarProxy, I configured the PFSense firewall to forward all outbound HTTPS traffic from the honeypot network to SecutiyOnion's network interface in the Proxy & Logs Network.
 
-![fw](/assets/fw_portfw_https.png)
+![fw](/assets/fw_portfw_https.PNG)
 
 
 ### VM Snapshot Management
@@ -73,7 +73,7 @@ The Windows machines will be under constant attack, they need to be refreshed fr
 
 Here are the cron jobs:
 
-![cronjobs](/assets/cronjobs1.png)
+![cronjobs](/assets/cronjobs1.PNG)
 
 ### Canarytokens (Traps)
 Each machine (including the Web and FTP server) contains a docx file which sends a beacon when it is opened in Microsoft Word. [Canarytokens](https://canarytokens.org/generate) by thinkst offers this service for free. Many thanks to them.
