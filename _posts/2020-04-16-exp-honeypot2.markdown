@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Setting a Honeypot Network With Monitoring In Mind"
+title:  "Setting Up a Honeypot Network With Monitoring In Mind"
 date:   2020-04-16 13:47:00 +0300
 categories: exp honeypot monitoring blueteam
 ---
