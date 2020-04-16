@@ -5,7 +5,7 @@ date:   2020-04-16 13:47:00 +0300
 categories: exp honeypot monitoring blueteam
 ---
 
-The goal is to setup a small network of honeypot machines with decent monitoring. The services exposed by the honeypot are legitimate and not tampered with, i.e, there are no honeypot services running. The main focus is the monitoring of Windows machines and seeing the attacks being carried on them via the monitoring services from start to finish.
+The goal is to setup a small network of honeypot machines with decent monitoring. The services exposed by the honeypot are legitimate and not tampered with, i.e, there are no honeypot services running. The main focus is monitoring the activities being done on the Windows machines and seeing the attacks being carried out on them via the monitoring services installed and configured across the network.
 
 Services exposed to the internet:
    * FTP (anonymous login enabled)
@@ -35,7 +35,7 @@ SecurityOnion can be accessed from this network. And the machine responsible for
 This one is self explanatory. The vulnerable machines are on this network. Furthermore, a SecurityOnion sniffer (sensor) is attached to this network as well.
 
 ### Windows Activity Monitoring
-I went with [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon) to log activities on the Windows machines. I used SwiftOnSecurity's configuration which can be found on [Github](https://github.com/SwiftOnSecurity/sysmon-config). Many thanks to SwiftOnSecurity.
+I went with [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon) to log Windows activities. I used SwiftOnSecurity's configuration which can be found on [Github](https://github.com/SwiftOnSecurity/sysmon-config). Many thanks to SwiftOnSecurity.
 
 Then I used [WinLogBeat](https://www.elastic.co/downloads/beats/winlogbeat). I had to make sure that the version of WinLogBeat matches the version of Kibana on running on SecurityOnion. With WinLogBeat you choose what you want to be shipped and where. Sysmon logs are stored in Windows Event Logs under: `Applications and Services > Microsoft > Windows > Sysmon > Operational`. The following is from the WinLogBeat configuration file (winlogbeat.yml):
 
