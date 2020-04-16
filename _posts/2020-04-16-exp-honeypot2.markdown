@@ -51,6 +51,7 @@ Once Sysmon and WinLogBeat are setup. Then you must configure SecurityOnion to a
 One last step, new releases of SecurityOnion default to the Minimal installation of Logstash. Meaning you have to add extra configurations which suite your needs manually.
 
 List of configurations I added:
+
 ![logstash](/assets/logstash_conf1.PNG)
 
 How to added them is as follows:
@@ -89,11 +90,12 @@ We need to make sure that things don't get out of control. To have a level of co
 * Created a Domain Admin user with a strong password (Used as backup).
 * Prevented Windows machines from showing the username of the last logged in user.
 
-### Issues and Concerns
+### Issues, Concerns, and Ideas
 * The firewall is currently redirecting HTTPS traffic sent on port 443. Thus, if an HTTPS connection is established over another port it will not be forwarded to PolarProxy for decryption.
 * I seem to be facing issues with allowing FTP traffic on the firewall. I am using vsftp on the Ubuntu server. I will work on this later.
 * I am not sure if Zeek can extract downloaded files from the decrypted HTTPS traffic. I can see the traffic but I am not sure if it can extract files.
 * I am yet to understand fully what SwiftOnSecurity's configuration for Sysmon logs, it is currently very helpful but I am not sure if it is missing anything.
+* I need a way to transfer files (malware samples) from the machines in the honeypot network to my analyses machines. Keep in mind that I have not installed vmware tools on any of the machines and I don't plan on doing so.
 
 ### Continuous Monitoring, Fine Tuning, and Upgrades
 That is the plan for now. As this network gets exposed to more attacks, I will not harden it. Instead, I will try to improve the logging and detection capabilities.
