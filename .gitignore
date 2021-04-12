@@ -4,3 +4,4 @@ _site
 .jekyll-metadata
 vendor
 _posts/2019-11-1-ad-enum.markdown
+.DS_Store
