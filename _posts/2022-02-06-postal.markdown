@@ -1,0 +1,104 @@
+
+---
+layout: post
+title:  "Kuwait Post Themed Phishing Attacks"
+date:   2022-02-06 00:00:00 +0300
+categories: cti
+---
+
+Noticed a spike in Kuwait Post themed phishing attacks and thus I decided to format and share data that I've collected in hopes that it might help fellow researchers.
+
+From what I've seen so far, the attack starts with an SMS message, enticing the user to click on a link. Noticed two forms of links:
+ - A shortened link using a url shortening service.
+ - A link to a free website building service.
+   - The threat actors use this service to build a site which acts like a redirector. I.e., they are using the service as a url shortener.
+
+I am not sure if the same actor is responsible for all the campaigns listed below or if it is multiple threat actors using the same kit. Screenshots and html code can be found in the urlscan reports at the end of the page.
+
+### URLs Collected
+| URL                                                                                   | Description                | IP Address (on date) | Date Spotted |
+|---------------------------------------------------------------------------------------|----------------------------|----------------------|--------------|
+| hxxp[://]kwt95876[.]dorik[.]io/                                                       | redirects to phishing site | 174.138.116.26       | 2022-02-06   |
+| hxxps[://]albakhoom[.]com/kwt/kw[.]php                                                | phishing site              | 185.197.249.155      | 2022-02-06   |
+| hxxps[://]long[.]af/xzntsi                                                            | redirects to phishing site | -                    | 2022-02-06   |
+| hxxps[://]www[.]itcostagrande[.]edu[.]mx/menu_sse_bak/estilos/KW/kw[.]php             | phishing site              | 45.114.225.241       | 2022-02-06   |
+| hxxps[://]kuwaitparcel[.]wonstasite[.]com/track                                       | redirects to phishing site | -                    | 2022-01-28   |
+| hxxps[://]fe652fffe[.]wonstasite[.]com/kwt/kw[.]php                                   | phishing site              | 34.117.145.14        | 2022-01-28   |
+| hxxp[://]kuwaitpost[.]com[.]u1578788[.]cp[.]regruhosting[.]ru/ar/kuwait/Redsys[.]html | phishing site              | 31.31.198.249        | 2022-01-24   |
+| hxxp[://]mrmohamedmohamed92-wordpress[.]sloppy[.]zone/kwt/kw[.]php                    | phishing site              | 217.24.220.217       | 2022-01-23   |
+| hxxps[://]kuwait-parcel[.]bizwebs[.]com/                                              | redirects to phishing site | 83.167.249.7         | 2022-01-23   |
+
+### Patterns
+Noticed smililaries in the url paths of the following domains
+
+| Domain                                       | Date Spotted |
+|----------------------------------------------|--------------|
+| albakhoom[.]com                              | 2022-02-06   |
+| www[.]itcostagrande[.]edu[.]mx               | 2022-02-06   |
+| mrmohamedmohamed92-wordpress[.]sloppy[.]zone | 2022-01-23   |
+
+Url paths can be found below. Again, same phishing kit? same actor? coincidence? no idea.
+
+
+### URL Paths
+
+| **www[.]itcostagrande[.]edu[.]mx**       |
+|------------------------------------------|
+| /menu_sse_bak/estilos/KW/etih/kw[.]php   |
+| /menu_sse_bak/estilos/KW/etih/otp[.]php  |
+| /menu_sse_bak/estilos/KW/etih/otp2[.]php |
+| /menu_sse_bak/estilos/KW/good[.]php      |
+| /menu_sse_bak/estilos/KW/kwt[.]php       |
+| /menu_sse_bak/estilos/KW/load[.]php      |
+| /menu_sse_bak/estilos/KW/load2[.]php     |
+| /menu_sse_bak/estilos/KW/load3[.]php     |
+| /menu_sse_bak/estilos/KW/sms[.]php       |
+| /menu_sse_bak/estilos/KW/sms2[.]php      |
+| /menu_sse_bak/estilos/KW/wait[.]php      |
+
+| **albakhoom[.]com**  |
+|----------------------|
+| /kwt/good[.]php      |
+| /kwt/load3[.]php     |
+| /kwt/etih/otp2[.]php |
+| /kwt/sms2[.]php      |
+| /kwt/load2[.]php     |
+| /kwt/etih/otp[.]php  |
+| /kwt/sms[.]php       |
+| /kwt/load[.]php      |
+| /kwt/etih/kw[.]php   |
+
+| **mrmohamedmohamed92-wordpress[.]sloppy[.]zone** |
+|--------------------------------------------------|
+| /kwt/wait[.]php                                  |
+| /kwt/etih/num[.]php                              |
+| /kwt/kw[.]php                                    |
+
+| **kuwaitpost[.]com[.]u1578788[.]cp[.]regruhosting[.]ru** |
+|----------------------------------------------------------|
+| /ar/kuwait/Seleccione_medio_de_pago_codigo[.]php         |
+| /ar/kuwait/Seleccione_medio_de_pago_codigo[.]php         |
+| /ar/kuwait/Seleccione_medio_de_codigo_loading[.]php      |
+| /ar/kuwait/pay[.]php                                     |
+| /ar/kuwait/Redsys[.]html                                 |
+
+### Urlscan Reports
+
+- hxxp[://]kwt95876[.]dorik[.]io/ 
+  - https://urlscan.io/result/e428f278-0c7b-4ee7-ab4c-0ec8d0f19708/
+- hxxps[://]albakhoom[.]com/kwt/kw[.]php 
+  - https://urlscan.io/result/e428f278-0c7b-4ee7-ab4c-0ec8d0f19708/
+- hxxps[://]www[.]itcostagrande[.]edu[.]mx/menu_sse_bak/estilos/KW/kw[.]php 
+  - https://urlscan.io/result/cc8324c0-3bab-445d-be32-87d648101dfd/
+  - https://urlscan.io/result/4fcdfc34-dd7a-4ec9-9014-48aa6e6427cd/
+- hxxps[://]kuwaitparcel[.]wonstasite[.]com/track
+  - https://urlscan.io/result/57dbd83f-229c-441c-9889-12f9ca5788fa/
+- hxxps[://]fe652fffe[.]wonstasite[.]com/kwt/kw[.]php 
+  - https://urlscan.io/result/57dbd83f-229c-441c-9889-12f9ca5788fa/
+- hxxp[://]kuwaitpost[.]com[.]u1578788[.]cp[.]regruhosting[.]ru/ar/kuwait/Redsys[.]html
+  - https://urlscan.io/result/268eb2db-6398-4bc4-aa3b-db8227b4f094/
+- hxxp[://]mrmohamedmohamed92-wordpress[.]sloppy[.]zone/kwt/kw[.]php 
+  - https://urlscan.io/result/2d8a7be0-10ec-49b2-8278-6eb2ac1bd739/
+- hxxps[://]kuwait-parcel[.]bizwebs[.]com/
+  - https://urlscan.io/result/2d8a7be0-10ec-49b2-8278-6eb2ac1bd739/
+
