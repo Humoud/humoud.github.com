@@ -15,17 +15,18 @@ From what I've seen so far, the attack starts with an SMS message, enticing the 
 I am not sure if the same actor is responsible for all the campaigns listed below or if it is multiple threat actors using the same kit. Screenshots and html code can be found in the urlscan reports at the end of the page.
 
 ### URLs Collected
-| URL                                                                                   | Description                | IP Address (on date) | Date Spotted |
-|---------------------------------------------------------------------------------------|----------------------------|----------------------|--------------|
-| hxxp[://]kwt95876[.]dorik[.]io/                                                       | redirects to phishing site | 174.138.116.26       | 2022-02-06   |
-| hxxps[://]albakhoom[.]com/kwt/kw[.]php                                                | phishing site              | 185.197.249.155      | 2022-02-06   |
-| hxxps[://]long[.]af/xzntsi                                                            | redirects to phishing site | -                    | 2022-02-06   |
-| hxxps[://]www[.]itcostagrande[.]edu[.]mx/menu_sse_bak/estilos/KW/kw[.]php             | phishing site              | 45.114.225.241       | 2022-02-06   |
-| hxxps[://]kuwaitparcel[.]wonstasite[.]com/track                                       | redirects to phishing site | -                    | 2022-01-28   |
-| hxxps[://]fe652fffe[.]wonstasite[.]com/kwt/kw[.]php                                   | phishing site              | 34.117.145.14        | 2022-01-28   |
-| hxxp[://]kuwaitpost[.]com[.]u1578788[.]cp[.]regruhosting[.]ru/ar/kuwait/Redsys[.]html | phishing site              | 31.31.198.249        | 2022-01-24   |
-| hxxp[://]mrmohamedmohamed92-wordpress[.]sloppy[.]zone/kwt/kw[.]php                    | phishing site              | 217.24.220.217       | 2022-01-23   |
-| hxxps[://]kuwait-parcel[.]bizwebs[.]com/                                              | redirects to phishing site | 83.167.249.7         | 2022-01-23   |
+
+| URL                                                                                   | Description                | IP  (on date)   | Date Spotted |
+|---------------------------------------------------------------------------------------|----------------------------|-----------------|--------------|
+| hxxp[://]kwt95876[.]dorik[.]io/                                                       | redirects to phishing site | 174.138.116.26  | 2022-02-06   |
+| hxxps[://]albakhoom[.]com/kwt/kw[.]php                                                | phishing site              | 185.197.249.155 | 2022-02-06   |
+| hxxps[://]long[.]af/xzntsi                                                            | redirects to phishing site | NA              | 2022-02-06   |
+| hxxps[://]www[.]itcostagrande[.]edu[.]mx/menu_sse_bak/estilos/KW/kw[.]php             | phishing site              | 45.114.225.241  | 2022-02-06   |
+| hxxps[://]kuwaitparcel[.]wonstasite[.]com/track                                       | redirects to phishing site | NA              | 2022-01-28   |
+| hxxps[://]fe652fffe[.]wonstasite[.]com/kwt/kw[.]php                                   | phishing site              | 34.117.145.14   | 2022-01-28   |
+| hxxp[://]kuwaitpost[.]com[.]u1578788[.]cp[.]regruhosting[.]ru/ar/kuwait/Redsys[.]html | phishing site              | 31.31.198.249   | 2022-01-24   |
+| hxxp[://]mrmohamedmohamed92-wordpress[.]sloppy[.]zone/kwt/kw[.]php                    | phishing site              | 217.24.220.217  | 2022-01-23   |
+| hxxps[://]kuwait-parcel[.]bizwebs[.]com/                                              | redirects to phishing site | 83.167.249.7    | 2022-01-23   |
 
 ### Patterns
 Noticed smililaries in the url paths of the following domains
